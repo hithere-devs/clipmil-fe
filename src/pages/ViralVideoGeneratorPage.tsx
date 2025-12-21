@@ -350,7 +350,7 @@ export default function ViralVideoGeneratorPage() {
 	return (
 		<div className='min-h-screen bg-gray-50 dark:bg-dark-bg'>
 			{/* Header */}
-			<div className='bg-white dark:bg-dark-card border-b border-gray-200 dark:border-gray-800 px-6 py-4'>
+			{/* <div className='bg-white dark:bg-dark-card border-b border-gray-200 dark:border-gray-800 px-6 py-4'>
 				<div className='flex items-center justify-between'>
 					<div>
 						<h1 className='text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2'>
@@ -363,7 +363,7 @@ export default function ViralVideoGeneratorPage() {
 						</p>
 					</div>
 				</div>
-			</div>
+			</div> */}
 
 			{/* Progress Steps */}
 			<div className='bg-white dark:bg-dark-card border-b border-gray-200 dark:border-gray-800 px-6 py-4'>
@@ -480,17 +480,17 @@ export default function ViralVideoGeneratorPage() {
 										<div className='absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none' />
 
 										{/* Play button - click to open full preview */}
-										<button
-											onClick={(e) => {
-												e.stopPropagation(); // Prevent card selection
-												setPreviewVideo(video);
-											}}
-											className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity'
-										>
-											<div className='w-12 h-12 flex items-center justify-center bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/40 hover:scale-110 transition-all'>
+										<div className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none'>
+											<button
+												onClick={(e) => {
+													e.stopPropagation(); // Prevent card selection
+													setPreviewVideo(video);
+												}}
+												className='w-12 h-12 flex items-center justify-center bg-white/20 backdrop-blur-sm rounded-full hover:bg-white/40 hover:scale-110 transition-all pointer-events-auto'
+											>
 												<Play className='w-6 h-6 text-white ml-0.5' />
-											</div>
-										</button>
+											</button>
+										</div>
 
 										{/* Video info */}
 										<div className='absolute bottom-2 left-2 right-2 pointer-events-none'>

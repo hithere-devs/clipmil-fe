@@ -223,7 +223,7 @@ export default function Layout() {
 				{/* Header */}
 				<header className='flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-dark-border bg-white/50 dark:bg-dark-card/50 backdrop-blur-sm'>
 					{/* Left Section - Date */}
-					<div className='flex items-center gap-6'>
+					<div className='flex items-center gap-18'>
 						<Button
 							variant='ghost'
 							size='icon'
@@ -236,14 +236,14 @@ export default function Layout() {
 						{/* Date Widget - clickable to navigate to calendar */}
 						<button
 							onClick={() => navigate('/dashboard/calendar')}
-							className='hidden md:flex items-center gap-3 hover:opacity-80 transition-opacity'
+							className='hidden md:flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer'
 						>
 							<div className='w-14 h-14 bg-white dark:bg-dark-card rounded-2xl border border-gray-100 dark:border-dark-border flex flex-col items-center justify-center shadow-sm'>
 								<span className='text-2xl font-bold text-gray-900 dark:text-white leading-none'>
 									{dayOfMonth}
 								</span>
 							</div>
-							<div>
+							<div className='flex gap-2'>
 								<p className='text-sm font-medium text-gray-900 dark:text-white'>
 									{dayName},
 								</p>
@@ -252,16 +252,12 @@ export default function Layout() {
 								</p>
 							</div>
 						</button>
-					</div>
-
-					{/* Center Section - Welcome Message (hidden on mobile) */}
-					<div className='hidden xl:block text-center'>
-						<h2 className='text-xl font-bold text-gray-900 dark:text-white'>
-							Hey, Need help? 👋
-						</h2>
-						<p className='text-sm text-gray-500 dark:text-gray-400'>
-							Just ask me anything!
-						</p>
+						{/* Center Section - Welcome Message (hidden on mobile) */}
+						<div className='hidden xl:block text-center'>
+							<h2 className='text-xl font-bold text-gray-900 dark:text-white'>
+								Hey, {user?.email?.split('@')[0]}! 👋
+							</h2>
+						</div>
 					</div>
 
 					{/* Right Section */}
@@ -298,46 +294,6 @@ export default function Layout() {
 							<Bell size={20} />
 							<span className='absolute top-1 right-1 w-2 h-2 bg-coral rounded-full' />
 						</Button>
-
-						{/* User Avatar (Desktop) */}
-						<div className='hidden lg:block'>
-							<DropdownMenu>
-								<DropdownMenuTrigger asChild>
-									<button className='flex items-center gap-2 hover:opacity-80 transition-opacity'>
-										<Avatar className='h-9 w-9 border-2 border-gray-100 dark:border-dark-border'>
-											<AvatarImage
-												src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.email}`}
-											/>
-											<AvatarFallback className='bg-coral/10 text-coral font-bold text-sm'>
-												{user?.email?.substring(0, 2).toUpperCase()}
-											</AvatarFallback>
-										</Avatar>
-										<div className='text-left'>
-											<p className='text-sm font-medium text-gray-900 dark:text-white'>
-												{user?.email?.split('@')[0]}
-											</p>
-											<p className='text-xs text-gray-500 dark:text-gray-400'>
-												Creator
-											</p>
-										</div>
-									</button>
-								</DropdownMenuTrigger>
-								<DropdownMenuContent align='end' className='w-56'>
-									<DropdownMenuLabel>My Account</DropdownMenuLabel>
-									<DropdownMenuSeparator />
-									<DropdownMenuItem>Profile</DropdownMenuItem>
-									<DropdownMenuItem>Billing</DropdownMenuItem>
-									<DropdownMenuSeparator />
-									<DropdownMenuItem
-										onClick={() => signOut()}
-										className='text-red-500 focus:text-red-500'
-									>
-										<LogOut className='mr-2 h-4 w-4' />
-										Sign Out
-									</DropdownMenuItem>
-								</DropdownMenuContent>
-							</DropdownMenu>
-						</div>
 					</div>
 				</header>
 
