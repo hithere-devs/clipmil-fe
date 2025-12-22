@@ -116,6 +116,15 @@ export default function ViralVideoGeneratorPage() {
 	const [previewMuted, setPreviewMuted] = useState(true);
 	const previewVideoRef = useRef<HTMLVideoElement>(null);
 
+	// Auto-play video when modal opens
+	useEffect(() => {
+		if (previewVideo && previewVideoRef.current) {
+			previewVideoRef.current.play().catch((error) => {
+				console.log('Auto-play prevented:', error);
+			});
+		}
+	}, [previewVideo]);
+
 	// Step 1: Background videos
 	const [backgroundVideos, setBackgroundVideos] = useState<Asset[]>([]);
 	const [selectedBackground, setSelectedBackground] = useState<Asset | null>(
