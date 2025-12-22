@@ -119,9 +119,15 @@ export default function ViralVideoGeneratorPage() {
 	// Auto-play video when modal opens
 	useEffect(() => {
 		if (previewVideo && previewVideoRef.current) {
-			previewVideoRef.current.play().catch((error) => {
-				console.log('Auto-play prevented:', error);
-			});
+			previewVideoRef.current
+				.play()
+				.then(() => {
+					setPreviewPlaying(true);
+				})
+				.catch((error) => {
+					console.log('Auto-play prevented:', error);
+					setPreviewPlaying(false);
+				});
 		}
 	}, [previewVideo]);
 
