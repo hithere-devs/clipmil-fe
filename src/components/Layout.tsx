@@ -14,7 +14,6 @@ import {
 	Menu,
 	X,
 	ChevronDown,
-	HelpCircle,
 	Calendar,
 	Wand2,
 } from 'lucide-react';
