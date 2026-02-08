@@ -57,14 +57,17 @@ export default function Layout() {
 	return (
 		<div className='flex h-screen bg-cream dark:bg-dark-bg transition-colors duration-300'>
 			{/* Sidebar - Desktop */}
-			<aside className='hidden lg:flex w-72 flex-col p-6 border-r border-gray-100 dark:border-dark-border'>
+			<aside className='hidden lg:flex w-20 hover:w-64 flex-col p-4 border-r border-gray-100 dark:border-dark-border transition-all duration-300 group z-50 bg-cream dark:bg-dark-bg overflow-hidden'>
 				{/* Logo */}
-				<div className='flex items-center gap-3 px-2 mb-8'>
+				<div className='flex items-center gap-3 px-2 mb-6'>
 					<img
 						src={theme === 'dark' ? logoLight : logoDark}
 						alt='Clipmil Logo'
-						className='h-8 w-auto'
+						className='h-7 w-auto shrink-0'
 					/>
+					<span className='font-display font-bold text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap'>
+						Clipmil
+					</span>
 				</div>
 
 				{/* Navigation */}
@@ -74,59 +77,46 @@ export default function Layout() {
 							key={item.path}
 							to={item.path}
 							className={({ isActive }) =>
-								`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 font-medium ${
+								`flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 font-medium text-sm whitespace-nowrap ${
 									isActive
-										? 'bg-coral text-white shadow-lg shadow-coral/20'
-										: 'text-gray-500 hover:bg-cream-dark dark:text-gray-400 dark:hover:bg-dark-hover'
+										? 'bg-coral text-white shadow-md shadow-coral/20'
+										: 'text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800'
 								}`
 							}
 						>
-							<item.icon size={20} />
-							{item.label}
+							<item.icon size={20} className='shrink-0' />
+							<span className='opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+								{item.label}
+							</span>
 						</NavLink>
 					))}
 				</nav>
 
-				{/* Help Card */}
-				<div className='mb-4 p-4 bg-coral/5 dark:bg-coral/10 rounded-2xl border border-coral/10'>
-					<div className='flex items-center gap-3 mb-3'>
-						<div className='w-8 h-8 bg-coral/10 rounded-full flex items-center justify-center'>
-							<HelpCircle size={16} className='text-coral' />
-						</div>
-						<span className='font-semibold text-gray-900 dark:text-white text-sm'>
-							Need help?
-						</span>
-					</div>
-					<p className='text-xs text-gray-500 dark:text-gray-400 mb-3'>
-						Check our documentation for guides and FAQs.
-					</p>
-					<Button variant='outline' size='sm' className='w-full text-xs'>
-						View Docs
-					</Button>
-				</div>
-
 				{/* User Profile Section */}
-				<div className='p-4 bg-cream-dark dark:bg-dark-card rounded-2xl'>
+				<div className='mt-auto pt-4 border-t border-gray-100 dark:border-dark-border'>
 					<DropdownMenu>
 						<DropdownMenuTrigger asChild>
-							<button className='flex items-center gap-3 w-full text-left hover:opacity-80 transition-opacity'>
-								<Avatar className='h-10 w-10 border-2 border-coral/20'>
+							<button className='flex items-center gap-3 w-full text-left hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-xl transition-colors'>
+								<Avatar className='h-8 w-8 border border-coral/20 shrink-0'>
 									<AvatarImage
 										src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.email}`}
 									/>
-									<AvatarFallback className='bg-coral/10 text-coral font-bold'>
+									<AvatarFallback className='bg-coral/10 text-coral font-bold text-xs'>
 										{user?.email?.substring(0, 2).toUpperCase()}
 									</AvatarFallback>
 								</Avatar>
-								<div className='flex-1 overflow-hidden'>
-									<p className='text-sm font-semibold text-gray-900 dark:text-white truncate'>
+								<div className='flex-1 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300'>
+									<p className='text-sm font-medium text-gray-900 dark:text-white truncate'>
 										{user?.email?.split('@')[0]}
 									</p>
-									<p className='text-xs text-gray-500 dark:text-gray-400'>
+									<p className='text-[10px] text-gray-500 dark:text-gray-400 uppercase tracking-wider'>
 										Creator
 									</p>
 								</div>
-								<ChevronDown size={16} className='text-gray-400' />
+								<ChevronDown
+									size={14}
+									className='text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300'
+								/>
 							</button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align='end' className='w-56'>
@@ -221,9 +211,9 @@ export default function Layout() {
 			{/* Main Content */}
 			<main className='flex-1 flex flex-col overflow-hidden'>
 				{/* Header */}
-				<header className='flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-dark-border bg-white/50 dark:bg-dark-card/50 backdrop-blur-sm'>
-					{/* Left Section - Date */}
-					<div className='flex items-center gap-18'>
+				<header className='flex items-center justify-between px-6 py-3 border-b border-gray-100 dark:border-dark-border bg-white/50 dark:bg-dark-card/50 backdrop-blur-sm'>
+					{/* Left Section - Date & Greeting */}
+					<div className='flex items-center gap-6'>
 						<Button
 							variant='ghost'
 							size='icon'
@@ -233,45 +223,44 @@ export default function Layout() {
 							<Menu size={20} />
 						</Button>
 
-						{/* Date Widget - clickable to navigate to calendar */}
-						<button
-							onClick={() => navigate('/dashboard/calendar')}
-							className='hidden md:flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer'
-						>
-							<div className='w-14 h-14 bg-white dark:bg-dark-card rounded-2xl border border-gray-100 dark:border-dark-border flex flex-col items-center justify-center shadow-sm'>
-								<span className='text-2xl font-bold text-gray-900 dark:text-white leading-none'>
-									{dayOfMonth}
-								</span>
-							</div>
-							<div className='flex gap-2'>
-								<p className='text-sm font-medium text-gray-900 dark:text-white'>
-									{dayName},
-								</p>
-								<p className='text-sm text-gray-500 dark:text-gray-400'>
-									{monthName}
-								</p>
-							</div>
-						</button>
-						{/* Center Section - Welcome Message (hidden on mobile) */}
-						<div className='hidden xl:block text-center'>
-							<h2 className='text-xl font-bold text-gray-900 dark:text-white'>
-								Hey, {user?.email?.split('@')[0]}! 👋
+						<div className='flex items-center gap-4'>
+							{/* Date Widget */}
+							<button
+								onClick={() => navigate('/dashboard/calendar')}
+								className='hidden md:flex items-center gap-3 hover:opacity-80 transition-opacity'
+							>
+								<div className='w-10 h-10 bg-white dark:bg-dark-card rounded-xl border border-gray-100 dark:border-dark-border flex flex-col items-center justify-center shadow-sm'>
+									<span className='text-lg font-bold text-gray-900 dark:text-white leading-none'>
+										{dayOfMonth}
+									</span>
+								</div>
+								<div className='hidden lg:block'>
+									<p className='text-xs font-medium text-gray-900 dark:text-white'>
+										{dayName}, {monthName}
+									</p>
+								</div>
+							</button>
+
+							{/* Greeting */}
+							<div className='hidden md:block h-8 w-px bg-gray-200 dark:bg-dark-border mx-2' />
+							<h2 className='hidden md:block text-sm font-medium text-gray-900 dark:text-white'>
+								Hey, {user?.email?.split('@')[0]}
 							</h2>
 						</div>
 					</div>
 
 					{/* Right Section */}
-					<div className='flex items-center gap-3'>
+					<div className='flex items-center gap-2'>
 						{/* Search */}
-						<div className='relative hidden md:block'>
+						<div className='relative hidden md:block mr-2'>
 							<Search
 								className='absolute left-3 top-1/2 -translate-y-1/2 text-gray-400'
-								size={18}
+								size={16}
 							/>
 							<Input
 								type='text'
-								placeholder='Start searching here...'
-								className='w-64 pl-10 rounded-full bg-white dark:bg-dark-card border-gray-100 dark:border-dark-border'
+								placeholder='Search...'
+								className='w-56 h-9 pl-9 rounded-full bg-white dark:bg-dark-card border-gray-100 dark:border-dark-border text-sm'
 							/>
 						</div>
 
@@ -280,25 +269,25 @@ export default function Layout() {
 							variant='ghost'
 							size='icon'
 							onClick={toggleTheme}
-							className='rounded-full'
+							className='rounded-full h-9 w-9'
 						>
-							{theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+							{theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
 						</Button>
 
 						{/* Notifications */}
 						<Button
 							variant='ghost'
 							size='icon'
-							className='rounded-full relative'
+							className='rounded-full relative h-9 w-9'
 						>
-							<Bell size={20} />
-							<span className='absolute top-1 right-1 w-2 h-2 bg-coral rounded-full' />
+							<Bell size={18} />
+							<span className='absolute top-2 right-2 w-1.5 h-1.5 bg-coral rounded-full' />
 						</Button>
 					</div>
 				</header>
 
 				{/* Content Area */}
-				<div className='flex-1 overflow-auto p-6 scrollbar-thin'>
+				<div className='flex-1 overflow-auto p-4 scrollbar-thin'>
 					<Outlet />
 				</div>
 			</main>
